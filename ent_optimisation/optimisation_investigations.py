@@ -253,7 +253,7 @@ def compare_for_different_detector_costs_and_lambda(ent_data_file_hot, pm_data_f
                     current_node_pm = None
                     continue
             try:
-                cost = get_cost_for_prep_measure_mult_devs(key_dict_hot = key_dict_pm_hot[id], key_dict_cold = key_dict_pm_cold[id], cost_devs_hot = detector_cost, cost_devs_cold = detector_cold_cost * detector_cost, c_ij = cij)
+                cost = get_cost_for_prep_measure_mult_devs(key_dict_hot = key_dict_pm_hot[id], key_dict_cold = key_dict_pm_cold[id], cost_devs_hot = detector_cost + 1, cost_devs_cold = detector_cold_cost * detector_cost + 1, c_ij = cij)
                 if cost != None:
                     if data_storage_location_keep_each_loop_pm != None:
                         dictionary = [
