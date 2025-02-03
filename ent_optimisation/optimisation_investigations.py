@@ -68,35 +68,35 @@ def compare_for_different_detector_costs(ent_data_file_hot, pm_data_file_hot,ent
         current_detector_cost_pm = min_det_cost
 
     objective_list = {}
-    # for detector_cost in np.arange(current_detector_cost, max_det_cost + 0.05, 0.05):
-    #     for id in key_dict_hot.keys():
-    #         if current_node != None:
-    #             if id != current_node:
-    #                 continue
-    #             else:
-    #                 current_node = None
-    #                 continue
-    #         try:
-    #             prob = cplex.Cplex()
-    #             optimisation = Entanglement_Optimisation_Multiple_Dev_Types(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
-    #             sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=1e5, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost)
-    #             objective_value = prob.solution.get_objective_value()
-    #             if data_storage_location_keep_each_loop != None:
-    #                 dictionary = [
-    #                     {"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
-    #                 dictionary_fieldnames = ["Detector_Cost","Graph_ID", "objective_value"]
-    #                 if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
-    #                     with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                         writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                         writer.writerows(dictionary)
-    #                 else:
-    #                     with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                         writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                         writer.writeheader()
-    #                         writer.writerows(dictionary)
-    #
-    #         except:
-    #             continue
+    for detector_cost in np.arange(current_detector_cost, max_det_cost + 0.05, 0.05):
+        for id in key_dict_hot.keys():
+            if current_node != None:
+                if id != current_node:
+                    continue
+                else:
+                    current_node = None
+                    continue
+            try:
+                prob = cplex.Cplex()
+                optimisation = Entanglement_Optimisation_Multiple_Dev_Types(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
+                sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=1e5, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost)
+                objective_value = prob.solution.get_objective_value()
+                if data_storage_location_keep_each_loop != None:
+                    dictionary = [
+                        {"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
+                    dictionary_fieldnames = ["Detector_Cost","Graph_ID", "objective_value"]
+                    if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
+                        with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                            writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                            writer.writerows(dictionary)
+                    else:
+                        with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                            writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                            writer.writeheader()
+                            writer.writerows(dictionary)
+    
+            except:
+                continue
     objective_list_pm = {}
     for detector_cost in np.arange(current_detector_cost_pm, max_det_cost + 0.05, 0.05):
         for id in key_dict_pm_hot.keys():
@@ -207,42 +207,42 @@ def compare_for_different_detector_costs_and_lambda(ent_data_file_hot, pm_data_f
         current_detector_cost_pm = min_det_cost
         current_node_pm = None
     objective_list = {}
-    # for Lambda in [32]:
-    #     for detector_cost in np.arange(min_det_cost, max_det_cost + 0.05, 0.05):
-    #         if abs(current_detector_cost - min_det_cost) > 0.01:
-    #             if abs(current_detector_cost - detector_cost) > 0.01:
-    #                 continue
-    #             else:
-    #                 current_detector_cost = min_det_cost
-    #                 continue
-    #         for id in key_dict_hot.keys():
-    #             if current_node != None:
-    #                 if id != current_node:
-    #                     continue
-    #                 else:
-    #                     current_node = None
-    #                     continue
-    #             try:
-    #                 prob = cplex.Cplex()
-    #                 optimisation = Entanglement_Optimisation_Multiple_Dev_Types(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
-    #                 sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=2e2, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost)
-    #                 objective_value = prob.solution.get_objective_value()
-    #                 if data_storage_location_keep_each_loop != None:
-    #                     dictionary = [
-    #                         {"Lambda": Lambda,"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
-    #                     dictionary_fieldnames = ["Lambda", "Detector_Cost","Graph_ID", "objective_value"]
-    #                     if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
-    #                         with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                             writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                             writer.writerows(dictionary)
-    #                     else:
-    #                         with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                             writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                             writer.writeheader()
-    #                             writer.writerows(dictionary)
-    #
-    #             except:
-    #                 continue
+    for Lambda in [32]:
+        for detector_cost in np.arange(min_det_cost, max_det_cost + 0.05, 0.05):
+            if abs(current_detector_cost - min_det_cost) > 0.01:
+                if abs(current_detector_cost - detector_cost) > 0.01:
+                    continue
+                else:
+                    current_detector_cost = min_det_cost
+                    continue
+            for id in key_dict_hot.keys():
+                if current_node != None:
+                    if id != current_node:
+                        continue
+                    else:
+                        current_node = None
+                        continue
+                try:
+                    prob = cplex.Cplex()
+                    optimisation = Entanglement_Optimisation_Multiple_Dev_Types(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
+                    sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=2e2, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost)
+                    objective_value = prob.solution.get_objective_value()
+                    if data_storage_location_keep_each_loop != None:
+                        dictionary = [
+                            {"Lambda": Lambda,"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
+                        dictionary_fieldnames = ["Lambda", "Detector_Cost","Graph_ID", "objective_value"]
+                        if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
+                            with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                                writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                                writer.writerows(dictionary)
+                        else:
+                            with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                                writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                                writer.writeheader()
+                                writer.writerows(dictionary)
+    
+                except:
+                    continue
     objective_list_pm = {}
     for detector_cost in np.arange(current_detector_cost_pm, max_det_cost + 0.05, 0.05):
         for id in key_dict_pm_hot.keys():
@@ -377,42 +377,42 @@ def compare_for_different_source_costs_and_lambda(pm_data_file_hot, pm_data_file
         current_detector_cost_pm = min_detector_cost
         current_node_pm = None
     objective_list = {}
-    # for Lambda in [32]:
-    #     for detector_cost in np.arange(min_det_cost, max_det_cost + 0.05, 0.05):
-    #         if abs(current_detector_cost - min_det_cost) > 0.01:
-    #             if abs(current_detector_cost - detector_cost) > 0.01:
-    #                 continue
-    #             else:
-    #                 current_detector_cost = min_det_cost
-    #                 continue
-    #         for id in key_dict_hot.keys():
-    #             if current_node != None:
-    #                 if id != current_node:
-    #                     continue
-    #                 else:
-    #                     current_node = None
-    #                     continue
-    #             try:
-    #                 prob = cplex.Cplex()
-    #                 optimisation = Entanglement_Optimisation_Multiple_Dev_Types(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
-    #                 sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=2e2, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost)
-    #                 objective_value = prob.solution.get_objective_value()
-    #                 if data_storage_location_keep_each_loop != None:
-    #                     dictionary = [
-    #                         {"Lambda": Lambda,"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
-    #                     dictionary_fieldnames = ["Lambda", "Detector_Cost","Graph_ID", "objective_value"]
-    #                     if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
-    #                         with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                             writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                             writer.writerows(dictionary)
-    #                     else:
-    #                         with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                             writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                             writer.writeheader()
-    #                             writer.writerows(dictionary)
-    #
-    #             except:
-    #                 continue
+    for Lambda in [32]:
+        for detector_cost in np.arange(min_det_cost, max_det_cost + 0.05, 0.05):
+            if abs(current_detector_cost - min_det_cost) > 0.01:
+                if abs(current_detector_cost - detector_cost) > 0.01:
+                    continue
+                else:
+                    current_detector_cost = min_det_cost
+                    continue
+            for id in key_dict_hot.keys():
+                if current_node != None:
+                    if id != current_node:
+                        continue
+                    else:
+                        current_node = None
+                        continue
+                try:
+                    prob = cplex.Cplex()
+                    optimisation = Entanglement_Optimisation_Multiple_Dev_Types(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
+                    sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=2e2, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost)
+                    objective_value = prob.solution.get_objective_value()
+                    if data_storage_location_keep_each_loop != None:
+                        dictionary = [
+                            {"Lambda": Lambda,"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
+                        dictionary_fieldnames = ["Lambda", "Detector_Cost","Graph_ID", "objective_value"]
+                        if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
+                            with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                                writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                                writer.writerows(dictionary)
+                        else:
+                            with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                                writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                                writer.writeheader()
+                                writer.writerows(dictionary)
+    
+                except:
+                    continue
     objective_list_pm = {}
     no_sol_list = []
     for detector_cost in np.arange(current_detector_cost_pm, max_detector_cost + 0.05, 0.05):
@@ -772,116 +772,116 @@ def compare_switch_for_different_detector_costs(ent_data_file_hot, pm_data_file_
 
 
 def compare_switch_for_different_detector_costs_lambda(ent_data_file_hot, pm_data_file_hot,ent_data_file_cold, pm_data_file_cold, Lambda_max, cij, fswitch, min_det_cost, max_det_cost, detector_cold_cost, data_storage_location_keep_each_loop = None, data_storage_location_keep_each_loop_pm = None):
-    # key_dict_hot, required_connections_hot = import_data_ent(data_file_location=ent_data_file_hot)
-    # key_dict_pm_hot = import_data_pm(data_file_location=pm_data_file_hot)
-    # key_dict_cold, required_connections_cold = import_data_ent(data_file_location=ent_data_file_cold)
-    # key_dict_pm_cold = import_data_pm(data_file_location=pm_data_file_cold)
-    # if data_storage_location_keep_each_loop != None:
-    #     if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
-    #         plot_information = pd.read_csv(data_storage_location_keep_each_loop + ".csv")
-    #         last_row_explored = plot_information.iloc[[-1]]
-    #         current_lambda = last_row_explored["Lambda"].iloc[0]
-    #         current_detector_cost = last_row_explored["Detector_Cost"].iloc[0]
-    #         current_node = last_row_explored["Graph_ID"].iloc[0]
-    #     else:
-    #         current_detector_cost = min_det_cost
-    #         current_lambda = 1
-    #         current_node = None
-    #         dictionary_fieldnames = ["Lambda", "Detector_Cost", "Graph_ID", "objective_value"]
-    #         with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #             writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #             writer.writeheader()
-    # else:
-    #     current_detector_cost = min_det_cost
-    #     current_node = None
-    #     current_lambda = 1
-    # if data_storage_location_keep_each_loop_pm != None:
-    #     if os.path.isfile(data_storage_location_keep_each_loop_pm + '.csv'):
-    #         plot_information = pd.read_csv(data_storage_location_keep_each_loop_pm + ".csv")
-    #         last_row_explored = plot_information.iloc[[-1]]
-    #         current_detector_cost_pm = last_row_explored["Detector_Cost"].iloc[0]
-    #         current_node_pm = last_row_explored["Graph_ID"].iloc[0]
-    #     else:
-    #         current_detector_cost_pm = min_det_cost
-    #         current_node_pm = None
-    #         dictionary_fieldnames = ["Detector_Cost", "Graph_ID", "objective_value"]
-    #         with open(data_storage_location_keep_each_loop_pm + '.csv', mode='a') as csv_file:
-    #             writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #             writer.writeheader()
-    # else:
-    #     current_detector_cost_pm = min_det_cost
-    #     current_node_pm = None
+    key_dict_hot, required_connections_hot = import_data_ent(data_file_location=ent_data_file_hot)
+    key_dict_pm_hot = import_data_pm(data_file_location=pm_data_file_hot)
+    key_dict_cold, required_connections_cold = import_data_ent(data_file_location=ent_data_file_cold)
+    key_dict_pm_cold = import_data_pm(data_file_location=pm_data_file_cold)
+    if data_storage_location_keep_each_loop != None:
+        if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
+            plot_information = pd.read_csv(data_storage_location_keep_each_loop + ".csv")
+            last_row_explored = plot_information.iloc[[-1]]
+            current_lambda = last_row_explored["Lambda"].iloc[0]
+            current_detector_cost = last_row_explored["Detector_Cost"].iloc[0]
+            current_node = last_row_explored["Graph_ID"].iloc[0]
+        else:
+            current_detector_cost = min_det_cost
+            current_lambda = 1
+            current_node = None
+            dictionary_fieldnames = ["Lambda", "Detector_Cost", "Graph_ID", "objective_value"]
+            with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                writer.writeheader()
+    else:
+        current_detector_cost = min_det_cost
+        current_node = None
+        current_lambda = 1
+    if data_storage_location_keep_each_loop_pm != None:
+        if os.path.isfile(data_storage_location_keep_each_loop_pm + '.csv'):
+            plot_information = pd.read_csv(data_storage_location_keep_each_loop_pm + ".csv")
+            last_row_explored = plot_information.iloc[[-1]]
+            current_detector_cost_pm = last_row_explored["Detector_Cost"].iloc[0]
+            current_node_pm = last_row_explored["Graph_ID"].iloc[0]
+        else:
+            current_detector_cost_pm = min_det_cost
+            current_node_pm = None
+            dictionary_fieldnames = ["Detector_Cost", "Graph_ID", "objective_value"]
+            with open(data_storage_location_keep_each_loop_pm + '.csv', mode='a') as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                writer.writeheader()
+    else:
+        current_detector_cost_pm = min_det_cost
+        current_node_pm = None
     objective_list = {}
-    # for Lambda in [16,32]:
-    #     if current_detector_cost == None:
-    #         current_detector_cost = min_det_cost
-    #     for detector_cost in np.arange(min_det_cost, max_det_cost + 0.05, 0.05):
-    #         # if current_detector_cost != None:
-    #         #     if abs(current_detector_cost - detector_cost) > 0.01:
-    #         #         continue
-    #         #     else:
-    #         #         current_detector_cost = None
-    #         for id in key_dict_hot.keys():
-    #             # if current_node != None:
-    #             #     if id != current_node:
-    #             #         continue
-    #             #     else:
-    #             #         current_node = None
-    #             #         continue
-    #             if id in [4,6,12,14,15,16,18,20,22,25,26,27,30,31,32,33,34,39]:
-    #                 try:
-    #                     prob = cplex.Cplex()
-    #                     optimisation = Entanglement_With_Switching_Opt(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
-    #                     sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=2e2, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost, f_switch=fswitch)
-    #                     objective_value = prob.solution.get_objective_value()
-    #                     if data_storage_location_keep_each_loop != None:
-    #                         dictionary = [
-    #                             {"Lambda": Lambda, "Detector_Cost": detector_cost, "Graph_ID": id,
-    #                              "objective_value": objective_value}]
-    #                         dictionary_fieldnames = ["Lambda", "Detector_Cost", "Graph_ID", "objective_value"]
-    #                         if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
-    #                             with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                                 writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                                 writer.writerows(dictionary)
-    #                         else:
-    #                             with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
-    #                                 writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                                 writer.writeheader()
-    #                                 writer.writerows(dictionary)
-    #
-    #                 except:
-    #                     continue
+    for Lambda in [16,32]:
+        if current_detector_cost == None:
+            current_detector_cost = min_det_cost
+        for detector_cost in np.arange(min_det_cost, max_det_cost + 0.05, 0.05):
+            # if current_detector_cost != None:
+            #     if abs(current_detector_cost - detector_cost) > 0.01:
+            #         continue
+            #     else:
+            #         current_detector_cost = None
+            for id in key_dict_hot.keys():
+                # if current_node != None:
+                #     if id != current_node:
+                #         continue
+                #     else:
+                #         current_node = None
+                #         continue
+                if id in [4,6,12,14,15,16,18,20,22,25,26,27,30,31,32,33,34,39]:
+                    try:
+                        prob = cplex.Cplex()
+                        optimisation = Entanglement_With_Switching_Opt(prob, required_connections_hot[id], key_dict_hot[id], key_dict_cold[id])
+                        sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=2e2, Lambda = Lambda, c_esource = 1, c_edet = detector_cost, c_edet_cold=detector_cold_cost * detector_cost, f_switch=fswitch)
+                        objective_value = prob.solution.get_objective_value()
+                        if data_storage_location_keep_each_loop != None:
+                            dictionary = [
+                                {"Lambda": Lambda, "Detector_Cost": detector_cost, "Graph_ID": id,
+                                 "objective_value": objective_value}]
+                            dictionary_fieldnames = ["Lambda", "Detector_Cost", "Graph_ID", "objective_value"]
+                            if os.path.isfile(data_storage_location_keep_each_loop + '.csv'):
+                                with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                                    writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                                    writer.writerows(dictionary)
+                            else:
+                                with open(data_storage_location_keep_each_loop + '.csv', mode='a') as csv_file:
+                                    writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                                    writer.writeheader()
+                                    writer.writerows(dictionary)
+    
+                    except:
+                        continue
     objective_list_pm = {}
-    # for detector_cost in np.arange(current_detector_cost_pm, max_det_cost + 0.05, 0.05):
-    #     for id in key_dict_pm_hot.keys():
-    #         if current_node_pm != None:
-    #             if id != current_node_pm:
-    #                 continue
-    #             else:
-    #                 current_node_pm = None
-    #                 continue
-    #         try:
-    #             prob = cplex.Cplex()
-    #             optimisation = Prep_And_Measure_Switching_Optimisation(prob, key_dict_pm_hot[id],
-    #                                                            key_dict_pm_cold[id])
-    #             sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=1e2, Lambda = 1, cost_source = 1, c_det = detector_cost, c_det_cold =detector_cold_cost * detector_cost, f_switch = fswitch)
-    #             objective_value = prob.solution.get_objective_value()
-    #             # n_terms, q_terms = split_sol_dict_pm(sol_dict)
-    #             if data_storage_location_keep_each_loop_pm != None:
-    #                 dictionary = [
-    #                     {"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
-    #                 dictionary_fieldnames = ["Detector_Cost","Graph_ID", "objective_value"]
-    #                 if os.path.isfile(data_storage_location_keep_each_loop_pm + '.csv'):
-    #                     with open(data_storage_location_keep_each_loop_pm + '.csv', mode='a') as csv_file:
-    #                         writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                         writer.writerows(dictionary)
-    #                 else:
-    #                     with open(data_storage_location_keep_each_loop_pm + '.csv', mode='a') as csv_file:
-    #                         writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
-    #                         writer.writeheader()
-    #                         writer.writerows(dictionary)
-    #         except:
-    #             continue
+    for detector_cost in np.arange(current_detector_cost_pm, max_det_cost + 0.05, 0.05):
+        for id in key_dict_pm_hot.keys():
+            if current_node_pm != None:
+                if id != current_node_pm:
+                    continue
+                else:
+                    current_node_pm = None
+                    continue
+            try:
+                prob = cplex.Cplex()
+                optimisation = Prep_And_Measure_Switching_Optimisation(prob, key_dict_pm_hot[id],
+                                                               key_dict_pm_cold[id])
+                sol_dict, prob = optimisation.initial_optimisation_cost_reduction(cij, time_limit=1e2, Lambda = 1, cost_source = 1, c_det = detector_cost, c_det_cold =detector_cold_cost * detector_cost, f_switch = fswitch)
+                objective_value = prob.solution.get_objective_value()
+                # n_terms, q_terms = split_sol_dict_pm(sol_dict)
+                if data_storage_location_keep_each_loop_pm != None:
+                    dictionary = [
+                        {"Detector_Cost": detector_cost,"Graph_ID": id, "objective_value": objective_value}]
+                    dictionary_fieldnames = ["Detector_Cost","Graph_ID", "objective_value"]
+                    if os.path.isfile(data_storage_location_keep_each_loop_pm + '.csv'):
+                        with open(data_storage_location_keep_each_loop_pm + '.csv', mode='a') as csv_file:
+                            writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                            writer.writerows(dictionary)
+                    else:
+                        with open(data_storage_location_keep_each_loop_pm + '.csv', mode='a') as csv_file:
+                            writer = csv.DictWriter(csv_file, fieldnames=dictionary_fieldnames)
+                            writer.writeheader()
+                            writer.writerows(dictionary)
+            except:
+                continue
 
     if data_storage_location_keep_each_loop != None:
         plot_information = pd.read_csv(data_storage_location_keep_each_loop + ".csv")
