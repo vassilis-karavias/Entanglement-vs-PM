@@ -16,8 +16,6 @@ class Topology(Enum):
 ### parameters to what kind of investigation this is
 
 topology =  Topology(3).name
-no_of_bobs = 10
-no_of_bob_locations = 10
 dbswitch = 0
 box_size = 100
 # for ring topology
